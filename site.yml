@@ -1,0 +1,17 @@
+---
+- hosts: my_site
+  become: yes
+  tasks:
+    - name: install epel repository
+      yum: name=epel-release state=present
+    - name: install nginx
+      yum: name=nginx state=present
+    - name: copy index.html
+      copy:
+        src: html/index.html
+        dest: /usr/share/nginx/html/index.html
+        owner: root
+        group: root
+        mode: '755'
+    - name: nginx running and enabled
+      service: name=nginx state=started enabled=yes
